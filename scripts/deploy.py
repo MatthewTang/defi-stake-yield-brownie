@@ -23,13 +23,24 @@ def deploy_token_farm_and_dapp_token():
     # dapp_token, weth_token, fau_token/dai
     weth_token = get_contract("weth_token")
     fau_token = get_contract("fau_token")
-    # add_allowed_tokens(token_farm, , account)
-
-    return
+    dict_of_allowed_tokens = {
+        dapp_token: get_contract("dai_usd_price_feed"),
+        fau_token: get_contract("dai_usd_price_feed"),
+        weth_token: get_contract("eth_usd_price_feed"),
+    }
+    add_allowed_tokens(token_farm, dict_of_allowed_tokens, account)
+    return token_farm, dapp_token
 
 
 def add_allowed_tokens(token_farm, dict_of_allowed_tokens, account):
-    pass
+    for token in dict_of_allowed_tokens:
+        add_tx = token_farm.addAllowedTokens(token.address, {"from": account})
+        add_tx.wait(1)
+        set_tx = token_farm.setPriceFeedContract(
+            token.address, dict_of_allowed_tokens[token].address, {"from": account}
+        )
+        set_tx.wait(1)
+    return token_farm
 
 
 def main():

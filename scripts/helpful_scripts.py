@@ -6,6 +6,7 @@ from brownie import (
     MockDAI,
     MockWETH,
     LinkToken,
+    Contract,
 )
 import eth_utils
 
@@ -38,7 +39,7 @@ def get_account(index=None, id=None):
     return accounts.add(config["wallets"]["from_key"])
 
 
-def get_contract(contrace_name):
+def get_contract(contract_name):
     """
     Args:
         contract_name(string): name refered to in the brownie config and 'contract_to_mock' variable
@@ -47,14 +48,14 @@ def get_contract(contrace_name):
         specified by the dictionary.  This cold either be a mock or the 'real' contract on a live
         network
     """
-    contract_type = contract_to_mock[contrace_name]
+    contract_type = contract_to_mock[contract_name]
     if network.show_active() in NON_FORKED_LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         if len(contract_type) <= 0:
             deploy_mocks()
         contract = contract_type[-1]
     else:
         try:
-            contract_address = config["networks"][network.show_active()][contrace_name]
+            contract_address = config["networks"][network.show_active()][contract_name]
             contract = Contract.from_abi(
                 contract_type._name, contract_address, contract_type._abi
             )
