@@ -9,6 +9,7 @@ contract TokenFarm is Ownable {
     mapping(address => mapping(address => uint256)) public stakingBalance; // eg { BTC: {user1: 1, user2: 1}, ETH: {user1: 1} }
     // we can't loop through a mapping
     address[] public stakers; // [user1, user2]
+    address[] public allowedTokens;
     mapping(address => uint256) public uniqueTokenStaked; // { user1: 2, user2: 1 }
 
     // stakeTokens
@@ -16,8 +17,6 @@ contract TokenFarm is Ownable {
     // issueTokens
     // adAllowedTokens
     // getEthValue
-
-    address[] public allowedTokens;
 
     function stakeToken(uint256 _amount, address _token) public {
         require(_amount > 0, "amount must be more than 0");
@@ -42,7 +41,14 @@ contract TokenFarm is Ownable {
 
     // 100 ETH 1:1 for every 1 ETH, we give 1 LUC token
 
-    function issueTokens() public onlyOwner {}
+    function issueTokens() public onlyOwner {
+        // issue tokens to all stackers
+        for (uint256 stakerIndex = 0; stakerIndex < stakers.length; staker++) {
+            address recipient = stakers[stakerIndex];
+            // send them token reward
+            // based on their total value locked
+        }
+    }
 
     function tokenIsAllowed(address _token) public view returns (bool) {
         for (
