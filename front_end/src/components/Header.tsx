@@ -2,12 +2,13 @@
 import { useEthers } from "@usedapp/core";
 import { Button, makeStyles } from "@material-ui/core";
 import { classicNameResolver } from "typescript";
+import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     container: {
         padding: theme.spacing(4),
         display: "flex",
-        justifyContent: "felx-end",
+        justifyContent: "flex-end",
         gap: theme.spacing(1),
     }
 }))
@@ -23,14 +24,14 @@ export const Header = () => {
     return (
         <div className={classes.container}>
             {isConnected ? (
-                <button color="primary" onClick={() => deactivate()}>
+                <Button color="primary" variant="contained" onClick={() => deactivate()}>
                     Disconnect
-                </button>
+                </Button>
             ) : (
-                <button color="primary"
+                <Button color="primary" variant="contained"
                     onClick={() => activateBrowserWallet()}>
                     Connect
-                </button>
+                </Button>
             )
             }
         </div>

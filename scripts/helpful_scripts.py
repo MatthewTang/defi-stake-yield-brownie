@@ -57,7 +57,7 @@ def get_contract(contract_name):
         try:
             contract_address = config["networks"][network.show_active()][contract_name]
             contract = Contract.from_abi(
-                contract_type._name, contract_address, contract_type._abi
+                contract_type._name, contract_address, contract_type.abi
             )
         except KeyError:
             print(
