@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { WalletBalance } from './WalletBalance';
 import { StakeForm } from './StakeForm';
 import { makeStyles } from "@material-ui/core"
-import { classicNameResolver } from 'typescript';
 
 const useStyles = makeStyles(theme => ({
     tabContent: {
